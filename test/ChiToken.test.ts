@@ -1,10 +1,14 @@
 import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-waffle";
+import { solidity } from "ethereum-waffle";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { expect, assert } from "chai";
+import chai from "chai";
 import { ethers } from "hardhat";
 import { Erc20, Erc20Factory } from "../types/generated";
 import { BigNumber } from "ethers";
+chai.use(solidity);
+
+const { expect, assert } = chai;
 
 const CHI_CONSTANTS = {
   totalSupply: 1000000,
@@ -98,10 +102,6 @@ describe("Chi Token", function () {
       signers[0].address,
       ethToWei(CHI_CONSTANTS.allowanceAmt)
     );
-    const allowance = await chiToken.allowance(
-      deployer.address,
-      signers[0].address
-    );
     // Connect to contract using another signer
     const chiTokenWithSigner = chiToken.connect(signers[0]);
 
@@ -116,5 +116,53 @@ describe("Chi Token", function () {
       return;
     }
     assert.isOk(false);
+  });
+  it("should increase allowance", async () => {
+    await chiToken.approve(
+      signers[0].address,
+      ethToWei(CHI_CONSTANTS.allowanceAmt)
+    );
+
+    const bal_before_increasing = await chiToken.allowance(
+      deployer.address,
+      signers[0].address
+    );
+    await chiToken.increaseAllowance(
+      signers[0].address,
+      ethToWei(CHI_CONSTANTS.allowanceAmt)
+    );
+
+    const bal_after_increasing = await chiToken.allowance(
+      deployer.address,
+      signers[0].address
+    );
+
+    const diff = bal_after_increasing.sub(bal_before_increasing);
+    // expect(diff.toString()).to.equal(ethToWei(CHI_CONSTANTS.allowanceAmt));
+    expect(diff).to.equal(ethToWei(CHI_CONSTANTS.allowanceAmt));
+  });
+  it("should decrease allowance", async () => {
+    await chiToken.approve(
+      signers[0].address,
+      ethToWei(CHI_CONSTANTS.allowanceAmt)
+    );
+
+    const bal_before_decreasing = await chiToken.allowance(
+      deployer.address,
+      signers[0].address
+    );
+    await chiToken.decreaseAllowance(
+      signers[0].address,
+      ethToWei(CHI_CONSTANTS.allowanceAmt)
+    );
+
+    const bal_after_decreasing = await chiToken.allowance(
+      deployer.address,
+      signers[0].address
+    );
+
+    const diff = bal_before_decreasing.sub(bal_after_decreasing);
+    // expect(diff.toString()).to.equal(ethToWei(CHI_CONSTANTS.allowanceAmt));
+    expect(diff).to.equal(ethToWei(CHI_CONSTANTS.allowanceAmt));
   });
 });
