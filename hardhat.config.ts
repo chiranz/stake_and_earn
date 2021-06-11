@@ -1,4 +1,6 @@
 import "@nomiclabs/hardhat-waffle";
+import "hardhat-typechain";
+import "@typechain/ethers-v5";
 import { HardhatUserConfig } from "hardhat/types";
 import dotenv from "dotenv";
 dotenv.config();
@@ -21,6 +23,10 @@ const config: HardhatUserConfig = {
     compilers: [{ version: "0.8.3", settings: {} }],
   },
   paths: { artifacts: "./src/artifacts" },
+  typechain: {
+    outDir: "types/generated",
+    target: "ethers-v5",
+  },
   networks: {
     hardhat: {
       chainId: 1337,

@@ -4,7 +4,7 @@ import "./utils/Context.sol";
 import "./interfaces/IERC20Metadata.sol";
 import "./interfaces/IERC20.sol";
 
-contract ChiToken is Context, IERC20, IERC20Metadata {
+contract ERC20 is Context, IERC20, IERC20Metadata {
     mapping(address => uint256) private _balances;
     mapping(address => mapping(address => uint256)) private _allowances;
 
@@ -12,9 +12,15 @@ contract ChiToken is Context, IERC20, IERC20Metadata {
     string private _name;
     string private _symbol;
 
-    constructor(string memory name_, string memory symbol_) {
+    constructor(
+        string memory name_,
+        string memory symbol_,
+        uint256 totalSupply_
+    ) {
         _name = name_;
         _symbol = symbol_;
+        _totalSupply = totalSupply_ * 10**decimals();
+        _balances[msg.sender] = _totalSupply;
     }
 
     function name() public view virtual override returns (string memory) {
