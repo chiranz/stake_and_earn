@@ -1,3 +1,3 @@
-# Hardhat + Ethers + Next.js + Tailwind Boilerplate for Daap Developers.
+## A simple DAPP for staking and earning tokens
 
-`This repository helps you start building your DAAP with Hardhat, Ethers, Next.js & tailwind without hussle of setting up the libraries out of the box.`
+Try it out by using the app [here](http://stake-and-earn.vercel.app/)
