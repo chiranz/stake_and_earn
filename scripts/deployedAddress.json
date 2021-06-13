@@ -1,0 +1,24 @@
+[
+  {
+    "name": "chiToken",
+    "deployedAddress": [
+      {
+        "address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+        "network": "hardhat"
+      },
+      {
+        "network": "ropsten",
+        "address": "0x44f12eA7598f51c8efd4272eF52B8055D4e2e446"
+      }
+    ]
+  },
+  {
+    "name": "daiToken",
+    "deployedAddress": [
+      {
+        "network": "hardhat",
+        "address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788"
+      }
+    ]
+  }
+]
