@@ -1,5 +1,5 @@
 import AERC20 from "../artifacts/contracts/ERC20.sol/ERC20.json";
-import { ethers, Signer, providers } from "ethers";
+import { ethers, providers } from "ethers";
 
 export const ERC20Abi = AERC20.abi;
 export const chiTokenDetails = {

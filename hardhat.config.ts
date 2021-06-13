@@ -3,6 +3,14 @@ import "hardhat-typechain";
 import "@typechain/ethers-v5";
 import { HardhatUserConfig } from "hardhat/types";
 import dotenv from "dotenv";
+import {
+  eEthereumNetwork,
+  eNetwork,
+  ePolygonNetwork,
+  NETWORKS_RPC_URL,
+} from "./helpers/types";
+import { chainId } from "./helpers/hardhat_helper";
+import { getPrivateKey } from "./helpers/env_helper";
 dotenv.config();
 
 // // This is a sample Hardhat task. To learn how to create your own go to
@@ -17,6 +25,11 @@ dotenv.config();
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
+const getCommonNetworkConfig = (networkName: eNetwork) => ({
+  url: NETWORKS_RPC_URL[networkName],
+  chainId: chainId[networkName],
+  accounts: [getPrivateKey()],
+});
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -31,10 +44,11 @@ const config: HardhatUserConfig = {
     hardhat: {
       chainId: 1337,
     },
-    ropsten: {
-      url: `${process.env.INFURA_API}`,
-      accounts: [`0x${process.env.PRIVATE_KEY}`],
-    },
+    ropsten: getCommonNetworkConfig(eEthereumNetwork.ropsten),
+    kovan: getCommonNetworkConfig(eEthereumNetwork.kovan),
+    main: getCommonNetworkConfig(eEthereumNetwork.main),
+    matic: getCommonNetworkConfig(ePolygonNetwork.matic),
+    mumbai: getCommonNetworkConfig(ePolygonNetwork.mumbai),
   },
 };
 

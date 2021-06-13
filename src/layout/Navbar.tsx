@@ -75,7 +75,11 @@ export const NavbarPage = () => {
         <Navbar.Nav position="right">
           <Navbar.Item>
             {signerAddress ? (
-              <Navbar.Link href="#" handleClick={() => {}}>
+              <Navbar.Link
+                href="#"
+                handleClick={() => {}}
+                className="border-green-500"
+              >
                 {signerAddress}
               </Navbar.Link>
             ) : (
@@ -116,6 +120,7 @@ interface NavbarTogglerProps {
 interface LinkProps extends Props {
   href: string;
   handleClick?: null | (() => void);
+  className?: string;
 }
 
 const style = {
@@ -183,12 +188,17 @@ Navbar.Nav = ({ children, position }: NavbarNavProps) => (
 Navbar.Item = ({ children }) => <li>{children}</li>;
 
 /* You can wrap the a tag with Link and pass href to Link if you are using either Create-React-App, Next.js or Gatsby */
-Navbar.Link = ({ children, href = "", handleClick = null }: LinkProps) => {
+Navbar.Link = ({
+  children,
+  href = "",
+  handleClick = null,
+  className,
+}: LinkProps) => {
   if (handleClick || href === "") {
     return (
       <button
         onClick={handleClick}
-        className={`${style.link} w-40 truncate border rounded-lg `}
+        className={`${style.link} ${className} w-40 truncate border rounded-lg `}
       >
         {children}
       </button>
